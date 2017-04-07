@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.select.dao.TeacherDao">
+	<select id="checkTeacher" parameterType="object" resultType="java.util.Map">
+		select *
+		from teacher
+		where T_ID = #{id} and T_PASSWORD = #{password}
+	</select>
+	<select id="getTeacherById" parameterType="object" resultType="java.util.Map">
+		select *
+		from teacher
+		where T_ID = #{id}
+	</select>
+
+	<select id="getTeachersByPosition" parameterType="object"
+		resultType="map">
+		select T_ID,T_NAME from teacher where POSITION =
+		#{position}
+	</select>
+
+	<update id="updateTeacher" parameterType="object">
+		update teacher
+		<set>
+			<if test="type == 'sex'">T_SEX=#{message},</if>
+			<if test="type == 'office'">OFFICE=#{message},</if>
+			<if test="type == 'tbirthday_year'">T_BIRTHDAY = #{message},</if>
+			<if test="type == 'phone'">PHONE = #{message},</if>
+			<if test="type == 'position'">POSITION = #{message},</if>
+			<if test="type == 'lab'">LAB = #{message},</if>
+			<if test="type == 'limit'">LIMIT = #{message},</if>
+			<if test="type == 'award'">AWARD = #{message},</if>
+			<if test="type == 'topic'">TOPIC = #{message},</if>
+			<if test="type == 'teachingDirection'">TEACHING_DIRECTION = #{message},</if>
+			<if test="type == 'researchDirection'">RESEARCH_AREA = #{message},</if>
+			<if test="type == 'degree'">DEGREE = #{message},</if>
+			<if test="type == 'graduateSchool'">GRADUATE_SCHOOL = #{message},</if>
+			<if test="type == 'graduateTime'">GRADUATE_TIME = #{message},</if>
+			<if test="type == 'workTime'">WORK_DATE = #{message}</if>
+		</set>
+		where T_ID = #{id}
+	</update>
+
+	<select id="getAllTeachers" resultType="map">
+	    select T_ID,T_NAME from teacher
+	</select>
+</mapper>

@@ -1,0 +1,10 @@
+{
+	"index.html": {
+		"resources": [
+			"js/jquery-2.2.2.min.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	}
+}

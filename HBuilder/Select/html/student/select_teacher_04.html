@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-2.2.2.min.js "></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">第四志愿选择</h1>
+			<button class="mui-pull-right mui-btn mui-btn-success" onclick="saveSelect()">提交</button>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<ul class='mui-table-view  mui-table-view-radio' id="teachers-list"></ul>
+			</div>
+		</div>
+		<div id="result_hiddle" style="display: none;"></div>
+	</body>
+
+	<script type="text/javascript">
+		var sid, li, result4;
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		(function($) {
+			$.ready(function() {
+				load();
+				//setInterval("load() ",1000);//重复执行
+			});
+		}(mui));
+
+		function GetQueryString(name) //获取url对应字段 
+		{
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null) return decodeURI(r[2]);
+			return null;
+		}
+
+		function load() {
+
+			sid = GetQueryString("sid");
+			mui.ajax('http://192.168.1.187:8080/Select-H5/teacher/getAllTeachers', {
+				//data: {},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					for(var i = 0; i < data.length; i++) {
+						li = "<li class='mui-table-view-cell'><a class='mui-navigate-right' value='" + data[i].T_ID + "'>" + data[i].T_NAME + "</a></li>";
+						$("#teachers-list").append(li);
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					mui.toast("网络错误！ ");
+				}
+			});
+		}
+
+		//获取选择结果
+		document.querySelector('.mui-table-view.mui-table-view-radio').addEventListener('selected', function(e) {
+			result4 = e.detail.el.innerHTML;
+			$("#result_hiddle").html(result4);
+		});
+
+		function saveSelect() {
+			var round4 = $("#result_hiddle > a").attr("value");
+			if(round4 == null || round4 == "" || round4 == undefined) {
+				alert("请选择教师！");
+				return;
+			} else {
+				mui.ajax('http://192.168.1.187:8080/Select-H5/select/saveSelectRound', {
+					data: {
+						sid: sid,
+						round4: round4
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						mui.back();
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						mui.toast("网络错误！ ");
+					}
+				});
+			}
+
+		}
+	</script>
+
+</html>

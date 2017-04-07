@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../../js/jquery-2.2.2.min.js "></script>
+		<script src="../../js/mui.min.js "></script>
+		<script type="text/javascript">
+			var c_class;
+			var div;
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			(function($) {
+				$.ready(function() {
+					load();
+					//setInterval("load() ",1000);//重复执行
+				});
+			}(mui));
+
+			function load() {
+				c_class = window.location.href.split("=")[1];
+				mui.ajax('http://192.168.1.187:8080/Select-H5/student/getStudentsByClass', {
+					data: {
+						class: c_class,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						for(var i = 0; i < data.length; i++) {
+							div = "<div class='mui-table-view-cell' onclick = 'student_message("+data[i].S_ID+")'><span>" + data[i].S_NAME + "</span></div>";
+							$("#students-list").append(div);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						mui.toast("网络错误！ ");
+					}
+				});
+			}
+			
+			function student_message(sid){
+				//alert(sid);
+				var url = "student_message.html?id="+sid;
+				location.href = url;
+			}
+		</script>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">学生列表</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-card">
+				<div class='mui-table-view' id="students-list"></div>
+			</div>
+		</div>
+	</body>
+
+</html>

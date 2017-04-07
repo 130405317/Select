@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+			
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+			
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			
+			.oa-contact-avatar img {
+				border-radius: 50%;
+			}
+			
+			.oa-contact-content {
+				width: 100%;
+			}
+			
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			
+			.oa-contact-name,
+			oa-contact-position {
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">导师双选</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="#select_tab">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">选择</span>
+			</a>
+			<a class="mui-tab-item" href="#student_message_tab">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">学生信息</span>
+			</a>
+			<a class="mui-tab-item" href="#more_tab">
+				<span class=" mui-icon mui-icon-more"></span>
+				<span class="mui-tab-label">更多</span>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<div id="select_tab" class="mui-control-content mui-active">
+				<div class="mui-card">
+					<div class="mui-table-view">
+						<div class="mui-table-view-cell">
+							<a id="select_students" href="" style="text-align: center;">
+								<span>选择学生</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="student_message_tab" class="mui-control-content">
+
+				<!--
+                	作者：1412273376@qq.com
+                	时间：2017-01-24
+                	描述：图片轮播
+                -->
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#"><img src="../../img/article_3162513_pic.jpeg" /></a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#"><img src="../../img/01300000327389123112673471411.jpg" /></a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#"><img src="../../img/10_v9sxg__.jpg" /></a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#"><img src="../../img/20130626135631-109897635.jpg" /></a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#"><img src="../../img/article_3162513_pic.jpeg" /></a>
+						</div>
+						<!--支持循环，需要重复图片节点-->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#"><img src="../../img/01300000327389123112673471411.jpg" /></a>
+						</div>
+					</div>
+					<div class="mui-slider-indicator">
+						<div class="mui-indicator mui-active"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+					</div>
+				</div>
+
+				<div class="mui-card">
+					<div class="mui-table-view">
+						<div class="mui-table-view-cell" id="class-1" style="text-align: center;">
+							<span>
+								计算机一班
+							</span>
+						</div>
+						<div class="mui-table-view-cell" id="class-2" style="text-align: center;">
+							<span>
+								计算机二班
+							</span>
+						</div>
+						<div class="mui-table-view-cell" id="class-3" style="text-align: center;">
+							<span>
+								计算机三班
+							</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="more_tab" class="mui-control-content ">
+				<div class="mui-card" style="margin-bottom: 35px;">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-media">
+							<a id="person-message">
+								<img class="mui-media-object mui-pull-right" src="../../img/Avatar.jpg">
+								<div class="mui-media-body">
+									<div id="teacher-name"></div>
+									<p class='mui-ellipsis' id="teacher-content"></p>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+	</body>
+	<script src="../../js/jquery-2.2.2.min.js "></script>
+	<script src="../../js/mui.min.js "></script>
+	<script>
+		var id;
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		(function($) {
+			$.ready(function() {
+				load();
+				//setInterval("load() ",1000);//重复执行
+				//获得slider插件对象
+				var gallery = mui('.mui-slider');
+				gallery.slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+			});
+		}(mui));
+		
+		
+		
+		function load() {
+			id = window.location.href.split("=")[1];
+			
+			$('#select_students').attr('href', 'select_students.html?tid=' + id);
+			
+			mui.ajax('http://192.168.1.187:8080/Select-H5/teacher/getTeacherById', {
+				data: {
+					id: id,
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					$(" #teacher-name ").text(data.T_NAME);
+				},
+				error: function(xhr, type, errorThrown) {
+					//异常处理；
+					mui.toast("网络错误！ ");
+				}
+			});
+
+			$("#person-message").click(function() {
+				var url = "teacher_message.html?id=" + id;
+				location.href = url;
+			});
+
+			$("#class-1").click(function() {
+				var url = "students_list.html?class=1";
+				location.href = url;
+			});
+
+			$("#class-2").click(function() {
+				var url = "students_list.html?class=2";
+				location.href = url;
+			});
+
+			$("#class-3").click(function() {
+				var url = "students_list.html?class=3";
+				location.href = url;
+			});
+		}
+		
+	</script>
+
+</html>
